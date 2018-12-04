@@ -1,8 +1,12 @@
 package com.dwyanewang.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
+
 /**
  * @FileName: User.java
- * @Description: TODO
+ * @Description: 用户实体类
  * @Author: Dwyanewang
  * @CreateTime: 2018/11/29 17:55
  */
@@ -17,6 +21,10 @@ public class User {
     private String sign;
     private String classify;
     private long wealth;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date faultDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date dealDate;
 
 
     public long getId() {
@@ -97,4 +105,19 @@ public class User {
         this.wealth = wealth;
     }
 
+    public Date getFaultDate() {
+        return faultDate;
+    }
+
+    public void setFaultDate(Date faultDate) {
+        this.faultDate = faultDate;
+    }
+
+    public Date getDealDate() {
+        return dealDate;
+    }
+
+    public void setDealDate(Date dealDate) {
+        this.dealDate = dealDate;
+    }
 }

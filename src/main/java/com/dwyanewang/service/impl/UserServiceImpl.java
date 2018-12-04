@@ -14,7 +14,7 @@ import java.util.Map;
 
 /**
  * @FileName: UserServiceImpl.java
- * @Description: TODO
+ * @Description: 用户服务层接口实现类
  * @Author: Dwyanewang
  * @CreateTime: 2018/11/29 18:01
  */
@@ -24,9 +24,9 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public Map<String, Object> listUsers(int page, int limit) {
+    public Map<String, Object> listUsersByTime(int page, int limit, String startTime, String endTime) {
         PageHelper.startPage(page, limit);
-        List<User> users = userMapper.listUsers();
+        List<User> users = userMapper.listUsersByTime(startTime, endTime);
         long count = ((Page<User>) users).getTotal();
         Map<String, Object> map = new HashMap<>(16);
         map.put("code", 0);

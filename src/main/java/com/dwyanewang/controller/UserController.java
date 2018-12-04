@@ -1,7 +1,8 @@
 package com.dwyanewang.controller;
 
 import com.dwyanewang.service.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -9,7 +10,7 @@ import java.util.Map;
 
 /**
  * @FileName: UserController.java
- * @Description: TODO
+ * @Description: 用户控制层
  * @Author: Dwyanewang
  * @CreateTime: 2018/11/29 18:05
  */
@@ -19,9 +20,8 @@ public class UserController {
     private UserService userService;
 
 
-
-    @GetMapping("/listUsers")
-    public Map<String, Object> listUsers(int page, int limit){
-        return userService.listUsers(page, limit);
+    @PostMapping("/listUsersByTime")
+    public Map<String, Object> listUsersByTime(@Param("page") int page, @Param("limit") int limit, @Param("startTime") String startTime, @Param("endTime") String endTime) {
+        return userService.listUsersByTime(page, limit, startTime, endTime);
     }
 }
