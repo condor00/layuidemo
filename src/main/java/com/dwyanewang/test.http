@@ -9,3 +9,15 @@ Content-Type: application/x-www-form-urlencoded
 
 
 ###
+
+GET http://localhost:8080/api/excption
+Accept: application/json
+
+###
+
+POST http://192.168.8.36:8090/hannan/ab/abTransformer?page=1&limit=8&alarmType=三相不平衡&occureTime=2018-09-29&endTime=2018-10-01
+Content-Type: application/x-www-form-urlencoded
+
+
+
+###

@@ -1,0 +1,170 @@
+<!--
+ - @FileName: form.html
+ - @Description: TODO
+ - @Author: Dwyanewang
+ - @CreateTime: 2018/12/9 21:22
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>form表单</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <style type="text/css">
+        .layui-elem-field {
+            border-color: #1E9FFF;
+        }
+
+        .layui-form-label {
+            padding: 9px 5px;
+            font-size: 16px;
+            text-align: center;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>抢修工单</legend>
+        <div class="layui-field-box layui-container">
+            <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+            <div class="layui-form-item layui-row">
+                <div class="layui-col-xs6 layui-col-sm4 layui-col-md4 ">
+                    <label class="layui-form-label">高压故障</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="" autocomplete="off" class="layui-input statistics-input">
+                    </div>
+                </div>
+                <div class="layui-col-xs6 layui-col-sm4 layui-col-md4">
+                    <label class="layui-form-label">低压故障</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="" autocomplete="off" class="layui-input statistics-input">
+                    </div>
+                </div>
+                <div class="layui-col-xs6 layui-col-sm4 layui-col-md4">
+                    <label class="layui-form-label">电能质量故障</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="" autocomplete="off" class="layui-input statistics-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item layui-row">
+                <div class="layui-col-xs6 layui-col-sm4 layui-col-md4 ">
+                    <label class="layui-form-label">客户内部故障</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="" autocomplete="off" class="layui-input statistics-input">
+                    </div>
+                </div>
+                <div class="layui-col-xs6 layui-col-sm4 layui-col-md4">
+                    <label class="layui-form-label">非电力故障</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="" autocomplete="off" class="layui-input statistics-input">
+                    </div>
+                </div>
+                <div class="layui-col-xs6 layui-col-sm4 layui-col-md4">
+                    <label class="layui-form-label">计量故障</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="" autocomplete="off" class="layui-input statistics-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>非抢修工单</legend>
+        <div class="layui-field-box layui-container">
+            <!-- layui-container  start-->
+            <div class="layui-form-item layui-row">
+                <!-- layui-row  start-->
+                <div class="layui-col-xs6 layui-col-sm4 layui-col-md4 ">
+                    <label class="layui-form-label">投诉</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="" autocomplete="off" class="layui-input statistics-input">
+                    </div>
+                </div>
+                <div class="layui-col-xs6 layui-col-sm4 layui-col-md4">
+                    <label class="layui-form-label">建议</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="" autocomplete="off" class="layui-input statistics-input">
+                    </div>
+                </div>
+                <div class="layui-col-xs6 layui-col-sm4 layui-col-md4">
+                    <label class="layui-form-label">举报</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="" autocomplete="off" class="layui-input statistics-input">
+                    </div>
+                </div>
+            </div><!-- layui-row  end-->
+            <div class="layui-form-item layui-row">
+                <!-- layui-row  start-->
+                <div class="layui-col-xs6 layui-col-sm4 layui-col-md4 ">
+                    <label class="layui-form-label">咨询</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="" autocomplete="off" class="layui-input statistics-input">
+                    </div>
+                </div>
+                <div class="layui-col-xs6 layui-col-sm4 layui-col-md4">
+                    <label class="layui-form-label">意见</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="" autocomplete="off" class="layui-input statistics-input">
+                    </div>
+                </div>
+                <div class="layui-col-xs6 layui-col-sm4 layui-col-md4">
+                    <label class="layui-form-label">表扬</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="" autocomplete="off" class="layui-input statistics-input">
+                    </div>
+                </div>
+            </div><!-- layui-row  end-->
+            <div class="layui-form-item layui-row">
+                <!-- layui-row  start-->
+                <div class="layui-col-xs6 layui-col-sm4 layui-col-md4">
+                    <label class="layui-form-label">服务申请</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="" autocomplete="off" class="layui-input statistics-input">
+                    </div>
+                </div>
+            </div><!-- layui-row  end-->
+        </div><!-- layui-container  end-->
+    </fieldset>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>日期</legend>
+        <div class="layui-field-box layui-container">
+            <div class="layui-form-item layui-row">
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6 ">
+                    <label class="layui-form-label">统计日期</label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input" id="statisticalDate">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</form>
+<script type="text/javascript" src="layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['form', 'laydate', 'layer'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$,
+            laydate = layui.laydate;
+        laydate.render({
+            elem: '#statisticalDate',
+            type: 'month'
+        });
+        $(".statistics-input").blur(function () {
+            console.log($(this).val());
+            var reg = /^[0-9]*$/;
+            var result = Number($(this).val());
+            if ($(this).val()) {
+                if (!reg.test(result)) {
+                    layer.msg("请输入数字!!!",{time:1500,icon:2,anim:6});
+                    $(this).focus().val("");
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

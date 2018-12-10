@@ -2,6 +2,7 @@ package com.dwyanewang.service.impl;
 
 import com.dwyanewang.dao.UserMapper;
 import com.dwyanewang.entity.User;
+import com.dwyanewang.entity.WorkOrder;
 import com.dwyanewang.service.UserService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -34,5 +35,10 @@ public class UserServiceImpl implements UserService {
         map.put("count", count);
         map.put("data", users);
         return map;
+    }
+
+    @Override
+    public int insert(List<WorkOrder> list) {
+        return userMapper.insert(list);
     }
 }

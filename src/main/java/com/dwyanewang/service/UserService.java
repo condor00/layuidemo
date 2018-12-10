@@ -1,6 +1,7 @@
 package com.dwyanewang.service;
 
 import com.dwyanewang.entity.User;
+import com.dwyanewang.entity.WorkOrder;
 
 import java.util.List;
 import java.util.Map;
@@ -14,4 +15,6 @@ import java.util.Map;
 public interface UserService {
 
     Map<String, Object> listUsersByTime(int page, int limit, String startTime, String endTime);
+
+    int insert(List<WorkOrder> list);
 }
