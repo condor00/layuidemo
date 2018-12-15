@@ -28,18 +28,17 @@
                     <div class="layui-input-block">
                         <input type="text" class="layui-input" id="statisticalDate">
                     </div>
-                    <button id="" class="layui-btn">Iframe</button>
                 </div>
-                <div class="layui-col-xs2" style="background-color: #333;height: 312px;">
+                <div class="layui-col-xs2" style="height: 312px;">
                     <div id="echart-1" style="height: 312px;"></div>
                 </div>
-                <div class="layui-col-xs4" style="background-color: #ccc;height: 312px;">
+                <div class="layui-col-xs4" style="height: 312px;">
                     <div id="echart-2" style="height: 312px;"></div>
                 </div>
-                <div class="layui-col-xs3" style="background-color: #333;height: 312px;">
+                <div class="layui-col-xs3" style="height: 312px;">
                     <div id="echart-3" style="height: 312px;"></div>
                 </div>
-                <div class="layui-col-xs3" style="background-color: #ccc;height: 312px;">
+                <div class="layui-col-xs3" style="height: 312px;">
                     <div id="echart-4" style="height: 312px;"></div>
                 </div>
             </div>
@@ -138,33 +137,29 @@
 
         var mychart1 = echarts.init(document.getElementById('echart-1'));
         var option1 = {
+            title: {
+                text: '2018工单总计',
+                left: 'center',
+                top: 20,
+                textStyle: {
+                    color: '#ccc'
+                }
+            },
             series: [{
-                name: '访问来源',
                 type: 'pie',
                 radius: '40%',
-                data: [{
-                    value: 235,
-                    name: "视频广告"
-                },
+                data: [
                     {
-                        value: 222,
-                        name: "联盟广告"
+                        value: 500,
+                        name: "非抢修工单"
                     },
                     {
-                        value: 456,
-                        name: "邮件营销"
-                    },
-                    {
-                        value: 367,
-                        name: "直接访问"
-                    },
-                    {
-                        value: 400,
-                        name: "搜索引擎"
+                        value: 666,
+                        name: "抢修工单"
                     }
                 ],
                 // // 南丁格尔图
-                roseType: 'angle',
+                // roseType: 'angle',
                 // 通用样式设置
                 itemStyle: {
                     //正常加载显示样式
@@ -188,7 +183,7 @@
                 }
             }],
             // 设置背景颜色
-            backgroundColor: '#2c343c',
+            // backgroundColor: '#2c343c',
             // 根据数值设置扇形的明暗度
             visualMap: {
                 // 不显示 visualMap 组件，只用于明暗度的映射
@@ -206,14 +201,24 @@
         mychart1.setOption(option1);
         var mychart2 = echarts.init(document.getElementById('echart-2'));
         var option2 = {
+            title: {
+                text: '2016~2018工单对比',
+                left: 'center',
+                // top: 20,
+                textStyle: {
+                    color: '#ccc'
+                }
+            },
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {            // 坐标轴指示器，坐标轴触发有效
                     type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
                 }
             },
+            // 图例
             legend: {
-                data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎', '百度', '谷歌', '必应', '其他']
+                top: 20,
+                data: ['抢修工单', '非抢修工单']
             },
             toolbox: {
                 show: true,
@@ -229,7 +234,7 @@
                     myTool: {
                         show: true,
                         title: '自定义扩展方法',
-                        z:'19931222',
+                        z: '19931222',
                         icon: 'path://M525.4 721.2H330.9c-9 0-18.5-7.7-18.5-18.1V311c0-9 9.3-18.1 18.5-18.1h336.6c9.3 0 18.5 9.1 18.5 18.1v232.7c0 6 8.8 12.1 15 12.1 6.2 0 15-6 15-12.1V311c0-25.6-25.3-48.9-50.1-48.9h-335c-26.2 0-50.1 23.3-50.1 48.9v389.1c0 36.3 20 51.5 50.1 51.5h197.6c6.2 0 9.3-7.5 9.3-15.1 0-6-6.2-15.3-12.4-15.3zM378.8 580.6c-6.2 0-12.3 8.6-12.3 14.6s6.2 14.6 12.3 14.6h141.4c6.2 0 12.3-5.8 12.3-13.4 0.3-9.5-6.2-15.9-12.3-15.9H378.8z m251.6-91.2c0-6-6.2-14.6-12.3-14.6H375.7c-6.2 0-12.4 8.6-12.4 14.6s6.2 14.6 12.4 14.6h240.8c6.2 0.1 13.9-8.5 13.9-14.6z m-9.2-120.5H378.8c-6.2 0-12.3 8.6-12.3 14.6s6.2 14.6 12.3 14.6h240.8c7.7 0 13.9-8.6 13.9-14.6s-6.2-14.6-12.3-14.6z m119.4 376.6L709 714.1c9.2-12 14.6-27 14.6-43.2 0-39.4-32.1-71.4-71.8-71.4-39.7 0-71.8 32-71.8 71.4s32.1 71.4 71.8 71.4c16.3 0 31.3-5.4 43.4-14.5l31.6 31.5c3.8 3.8 10 3.8 13.8 0 3.8-3.8 3.8-10 0-13.8z m-88.8-23.6c-28.3 0-51.3-22.8-51.3-51s23-51 51.3-51c28.3 0 51.3 22.8 51.3 51s-23 51-51.3 51z',
                         onclick: function () {
                             $('#echart-2').width('800').height('600');
@@ -264,10 +269,11 @@
                 }
             },
             calculable: true,
+            //横轴
             xAxis: [
                 {
                     type: 'category',
-                    data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                    data: ['2018-10', '2018-11', '2018-12']
                 }
             ],
             yAxis: [
@@ -277,227 +283,188 @@
             ],
             series: [
                 {
-                    name: '直接访问',
+                    name: '抢修工单',
                     type: 'bar',
-                    data: [320, 332, 301, 334, 390, 330, 320]
+                    data: [300, 320, 380]
                 },
                 {
-                    name: '邮件营销',
+                    name: '非抢修工单',
                     type: 'bar',
-                    stack: '广告',
-                    data: [120, 132, 101, 134, 90, 230, 210]
-                },
-                {
-                    name: '联盟广告',
-                    type: 'bar',
-                    stack: '广告',
-                    data: [220, 182, 191, 234, 290, 330, 310]
-                },
-                {
-                    name: '视频广告',
-                    type: 'bar',
-                    stack: '广告',
-                    data: [150, 232, 201, 154, 190, 330, 410]
-                },
-                {
-                    name: '搜索引擎',
-                    type: 'bar',
-                    data: [862, 1018, 964, 1026, 1679, 1600, 1570],
-                    markLine: {
-                        itemStyle: {
-                            normal: {
-                                lineStyle: {
-                                    type: 'dashed'
-                                }
-                            }
-                        },
-                        data: [
-                            [{type: 'min'}, {type: 'max'}]
-                        ]
-                    }
-                },
-                {
-                    name: '百度',
-                    type: 'bar',
-                    barWidth: 5,
-                    stack: '搜索引擎',
-                    data: [620, 732, 701, 734, 1090, 1130, 1120]
-                },
-                {
-                    name: '谷歌',
-                    type: 'bar',
-                    stack: '搜索引擎',
-                    data: [120, 132, 101, 134, 290, 230, 220]
-                },
-                {
-                    name: '必应',
-                    type: 'bar',
-                    stack: '搜索引擎',
-                    data: [60, 72, 71, 74, 190, 130, 110]
-                },
-                {
-                    name: '其他',
-                    type: 'bar',
-                    stack: '搜索引擎',
-                    data: [62, 82, 91, 84, 109, 110, 120]
+                    data: [480, 560, 600]
                 }
             ]
         };
         mychart2.setOption(option2);
-        // $('#echart-2').off("click").click(function () {
-        //     $(this).width('800').height('600');
-        //     mychart2.resize();
-        //     layer.open({
-        //         type: 1,
-        //         title: false,
-        //         area: ['800px', '600px'],
-        //         content: $(this),
-        //         //右上角关闭按钮回调
-        //         cancel: function (index, layero) {
-        //             $('#echart-2').width('593').height('312');
-        //             console.log(layui.$(this));
-        //             // layui.$(this).width('100%').height('312');
-        //             mychart2.resize();
-        //             //返回false可禁止点击该按钮关闭
-        //             // return false;
-        //         }
-        //     });
-        // });
 
         var mychart3 = echarts.init(document.getElementById('echart-3'));
         var option3 = {
+            title: {
+                text: '2018抢修工单',
+                left: 'center',
+                // top: 20,
+                textStyle: {
+                    color: '#ccc'
+                }
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{b}: {c} ({d}%)"
+            },
+            // 图例
+            legend: {
+                orient: 'horizontal',
+                bottom:'bottom',
+                right: 'right',
+                data: ['高压故障', '低压故障','电能质量故障','客户内部故障','非电力故障','计量故障']
+            },
             series: [{
-                name: '访问来源',
                 type: 'pie',
-                radius: '60%',
+                radius: ['15%','35%'],
+                center:['35%','50%'],
                 data: [{
                     value: 235,
-                    name: "视频广告"
+                    name: "高压故障"
                 },
                     {
                         value: 222,
-                        name: "联盟广告"
+                        name: "低压故障"
                     },
                     {
                         value: 456,
-                        name: "邮件营销"
+                        name: "电能质量故障"
                     },
                     {
                         value: 367,
-                        name: "直接访问"
+                        name: "客户内部故障"
                     },
                     {
                         value: 400,
-                        name: "搜索引擎"
+                        name: "非电力故障"
+                    },
+                    {
+                        value: 367,
+                        name: "计量故障"
                     }
                 ],
                 // // 南丁格尔图
-                roseType: 'angle',
+                // roseType: 'angle',
                 // 通用样式设置
-                itemStyle: {
-                    //正常加载显示样式
-                    normal: {
-                        // 阴影的大小
-                        shadowBlur: 200,
-                        // 阴影水平方向上的偏移
-                        shadowOffsetX: 0,
-                        // 阴影垂直方向上的偏移
-                        shadowOffsetY: 0,
-                        // 阴影颜色
-                        shadowColor: 'rgba(0, 0, 0, 0.5)',
-                        // 设置所有扇形的颜色
-                        color: '#c23531'
-                    },
-                    //鼠标hover时显示样式
-                    emphasis: {
-                        shadowBlur: 200,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }
+                // itemStyle: {
+                //     //正常加载显示样式
+                //     normal: {
+                //         // 阴影的大小
+                //         shadowBlur: 200,
+                //         // 阴影水平方向上的偏移
+                //         shadowOffsetX: 0,
+                //         // 阴影垂直方向上的偏移
+                //         shadowOffsetY: 0,
+                //         // 阴影颜色
+                //         shadowColor: 'rgba(0, 0, 0, 0.5)',
+                //         // 设置所有扇形的颜色
+                //         color: '#c23531'
+                //     },
+                //     //鼠标hover时显示样式
+                //     emphasis: {
+                //         shadowBlur: 200,
+                //         shadowColor: 'rgba(0, 0, 0, 0.5)'
+                //     }
+                // }
             }],
-            // 设置背景颜色
-            backgroundColor: '#34a9cc',
             // 根据数值设置扇形的明暗度
-            visualMap: {
-                // 不显示 visualMap 组件，只用于明暗度的映射
-                show: false,
-                // 映射的最小值为 80
-                min: 80,
-                // 映射的最大值为 600
-                max: 600,
-                inRange: {
-                    // 明暗度的范围是 0 到 1
-                    colorLightness: [0, 1]
-                }
-            }
+            // visualMap: {
+            //     // 不显示 visualMap 组件，只用于明暗度的映射
+            //     show: false,
+            //     // 映射的最小值为 80
+            //     min: 80,
+            //     // 映射的最大值为 600
+            //     max: 600,
+            //     inRange: {
+            //         // 明暗度的范围是 0 到 1
+            //         colorLightness: [0, 1]
+            //     }
+            // }
         };
         mychart3.setOption(option3);
         var mychart4 = echarts.init(document.getElementById('echart-4'));
         var option4 = {
+            legend: {
+                orient: 'horizontal',
+                bottom:'bottom',
+                right: 'right',
+                data: ['投诉', '建议','举报','咨询','意见','表扬','服务申请']
+            },
             series: [{
-                name: '访问来源',
                 type: 'pie',
-                radius: '60%',
+                radius: ['15%','35%'],
+                center:['35%','50%'],
                 data: [{
                     value: 235,
-                    name: "视频广告"
+                    name: "投诉"
                 },
                     {
                         value: 222,
-                        name: "联盟广告"
+                        name: "建议"
                     },
                     {
                         value: 456,
-                        name: "邮件营销"
+                        name: "举报"
                     },
                     {
                         value: 367,
-                        name: "直接访问"
+                        name: "咨询"
                     },
                     {
                         value: 400,
-                        name: "搜索引擎"
+                        name: "意见"
+                    },
+                    {
+                        value: 367,
+                        name: "表扬"
+                    },
+                    {
+                        value: 400,
+                        name: "服务申请"
                     }
                 ],
                 // // 南丁格尔图
-                roseType: 'angle',
+                // roseType: 'angle',
                 // 通用样式设置
-                itemStyle: {
-                    //正常加载显示样式
-                    normal: {
-                        // 阴影的大小
-                        shadowBlur: 200,
-                        // 阴影水平方向上的偏移
-                        shadowOffsetX: 0,
-                        // 阴影垂直方向上的偏移
-                        shadowOffsetY: 0,
-                        // 阴影颜色
-                        shadowColor: 'rgba(0, 0, 0, 0.5)',
-                        // 设置所有扇形的颜色
-                        color: '#c23531'
-                    },
-                    //鼠标hover时显示样式
-                    emphasis: {
-                        shadowBlur: 200,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }
+                // itemStyle: {
+                //     //正常加载显示样式
+                //     normal: {
+                //         // 阴影的大小
+                //         shadowBlur: 200,
+                //         // 阴影水平方向上的偏移
+                //         shadowOffsetX: 0,
+                //         // 阴影垂直方向上的偏移
+                //         shadowOffsetY: 0,
+                //         // 阴影颜色
+                //         shadowColor: 'rgba(0, 0, 0, 0.5)',
+                //         // 设置所有扇形的颜色
+                //         color: '#c23531'
+                //     },
+                //     //鼠标hover时显示样式
+                //     emphasis: {
+                //         shadowBlur: 200,
+                //         shadowColor: 'rgba(0, 0, 0, 0.5)'
+                //     }
+                // }
             }],
             // 设置背景颜色
-            backgroundColor: '#2c343c',
+            // backgroundColor: '#2c343c',
             // 根据数值设置扇形的明暗度
-            visualMap: {
-                // 不显示 visualMap 组件，只用于明暗度的映射
-                show: false,
-                // 映射的最小值为 80
-                min: 80,
-                // 映射的最大值为 600
-                max: 600,
-                inRange: {
-                    // 明暗度的范围是 0 到 1
-                    colorLightness: [0, 1]
-                }
-            }
+            // visualMap: {
+            //     // 不显示 visualMap 组件，只用于明暗度的映射
+            //     show: false,
+            //     // 映射的最小值为 80
+            //     min: 80,
+            //     // 映射的最大值为 600
+            //     max: 600,
+            //     inRange: {
+            //         // 明暗度的范围是 0 到 1
+            //         colorLightness: [0, 1]
+            //     }
+            // }
         };
         mychart4.setOption(option4);
 

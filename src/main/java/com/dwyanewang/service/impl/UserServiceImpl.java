@@ -7,6 +7,7 @@ import com.dwyanewang.service.UserService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import java.util.Map;
  * @Author: Dwyanewang
  * @CreateTime: 2018/11/29 18:01
  */
+@Transactional
 @Service
 public class UserServiceImpl implements UserService {
     @Resource
