@@ -11,62 +11,66 @@
     <title>form-layer</title>
     <link rel="stylesheet" href="layui/css/layui.css">
 </head>
-<body style="background-image: url('image/bg.png');">
-
-<div style="width: 1780px;padding: 80px 70px 0;">
-    <fieldset class="layui-elem-field layui-field-title">
-        <legend style="color: #fff;">95598工单统计
-            <button id="iframe" class="layui-btn layui-btn-radius" data-aaa="test"
-                    style="margin-left: 30px;border: 1px solid #c8c9bb;background: linear-gradient(#2d5ca1, #00003b)"><i
-                    class="layui-icon"></i>录入
-            </button>
-        </legend>
-        <div class="layui-field-box">
-            <div class="layui-row">
-                <div class="layui-col-xs12" style="background-color: #009688;height: 48px;">
-                    <label class="layui-form-label">统计日期</label>
-                    <div class="layui-input-block">
-                        <input type="text" class="layui-input" id="statisticalDate">
+<body>
+<!--<div style="height: 80px;"></div>-->
+<div style="background-image: url('image/bg.png');width: 1920px;height: 1000px;">
+    <div style="width: 1780px;padding: 80px 70px 0;">
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend style="color: #fff;">95598工单统计
+                <button id="iframe" class="layui-btn layui-btn-radius" data-aaa="test"
+                        style="margin-left: 30px;border: 1px solid #c8c9bb;background: linear-gradient(#2d5ca1, #00003b)">
+                    <i class="layui-icon"></i>录入
+                </button>
+            </legend>
+            <div class="layui-field-box">
+                <div class="layui-row">
+                    <div class="layui-col-xs12" style="background-color: #009688;height: 48px;">
+                        <label class="layui-form-label">统计日期</label>
+                        <div class="layui-input-block">
+                            <input type="text" class="layui-input" id="statisticalDate">
+                        </div>
+                    </div>
+                    <div class="layui-col-xs2" style="height: 312px;">
+                        <div id="echart-1" style="height: 312px;"></div>
+                    </div>
+                    <div class="layui-col-xs4" style="height: 312px;">
+                        <div id="echart-2" style="height: 312px;"></div>
+                    </div>
+                    <div class="layui-col-xs3" style="height: 312px;">
+                        <div id="echart-3" style="height: 312px;"></div>
+                    </div>
+                    <div class="layui-col-xs3" style="height: 312px;">
+                        <div id="echart-4" style="height: 312px;"></div>
                     </div>
                 </div>
-                <div class="layui-col-xs2" style="height: 312px;">
-                    <div id="echart-1" style="height: 312px;"></div>
-                </div>
-                <div class="layui-col-xs4" style="height: 312px;">
-                    <div id="echart-2" style="height: 312px;"></div>
-                </div>
-                <div class="layui-col-xs3" style="height: 312px;">
-                    <div id="echart-3" style="height: 312px;"></div>
-                </div>
-                <div class="layui-col-xs3" style="height: 312px;">
-                    <div id="echart-4" style="height: 312px;"></div>
+            </div>
+        </fieldset>
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>95598工单统计</legend>
+            <div class="layui-field-box">
+                <div class="layui-row">
+                    <div class="layui-col-xs12" style="background-color: #009688;height: 48px;">
+                    </div>
+                    <div class="layui-col-xs2" style="background-color: #333;height: 312px;">
+
+                    </div>
+                    <div class="layui-col-xs4" style="background-color: #ccc;height: 312px;">
+
+                    </div>
+                    <div class="layui-col-xs3" style="background-color: #333;height: 312px;">
+
+                    </div>
+                    <div class="layui-col-xs3" style="background-color: #ccc;height: 312px;">
+
+                    </div>
                 </div>
             </div>
-        </div>
-    </fieldset>
-    <fieldset class="layui-elem-field layui-field-title">
-        <legend>95598工单统计</legend>
-        <div class="layui-field-box">
-            <div class="layui-row">
-                <div class="layui-col-xs12" style="background-color: #009688;height: 48px;">
-                </div>
-                <div class="layui-col-xs2" style="background-color: #333;height: 312px;">
-
-                </div>
-                <div class="layui-col-xs4" style="background-color: #ccc;height: 312px;">
-
-                </div>
-                <div class="layui-col-xs3" style="background-color: #333;height: 312px;">
-
-                </div>
-                <div class="layui-col-xs3" style="background-color: #ccc;height: 312px;">
-
-                </div>
-            </div>
-        </div>
-    </fieldset>
+        </fieldset>
+    </div>
 </div>
+<div id="container" style="width: 800px;height: 600px;display: none;"></div>
 <script type="text/javascript" src="layui/layui.js"></script>
+<script type="text/javascript" src="layui/lay/plug/macarons.js"></script>
 <script type="text/javascript">
     layui.config({
         base: 'layui/lay/plug/'
@@ -135,19 +139,74 @@
             active[type] ? active[type].call(this) : '';
         });
 
-        var mychart1 = echarts.init(document.getElementById('echart-1'));
+        var mychart1 = echarts.init(document.getElementById('echart-1'), 'macarons');
         var option1 = {
+            //标题
             title: {
                 text: '2018工单总计',
                 left: 'center',
-                top: 20,
+                top: 15
+            },
+            // 图例
+            legend: {
+                bottom: 20,
+                data: ['抢修工单', '非抢修工单'],
                 textStyle: {
-                    color: '#ccc'
+                    color: '#008acd'
+                }
+            },
+            tooltip: {
+                trigger: 'item',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                },
+                formatter: '{b}: {c}笔<br\>占比：{d}%'
+            },
+            // 工具栏
+            toolbox: {
+                show: true,
+                // orient: 'vertical',
+                x: 'center',
+                y: '50px',
+                feature: {
+                    //数据视图
+                    dataView: {show: true, readOnly: false},
+                    //还原
+                    restore: {show: true},
+                    //保存为图片
+                    saveAsImage: {show: true},
+                    //自定义工具
+                    myTool: {
+                        show: true,
+                        title: '放大',
+                        // z: '19931222',
+                        icon: 'path://M525.4 721.2H330.9c-9 0-18.5-7.7-18.5-18.1V311c0-9 9.3-18.1 18.5-18.1h336.6c9.3 0 18.5 9.1 18.5 18.1v232.7c0 6 8.8 12.1 15 12.1 6.2 0 15-6 15-12.1V311c0-25.6-25.3-48.9-50.1-48.9h-335c-26.2 0-50.1 23.3-50.1 48.9v389.1c0 36.3 20 51.5 50.1 51.5h197.6c6.2 0 9.3-7.5 9.3-15.1 0-6-6.2-15.3-12.4-15.3zM378.8 580.6c-6.2 0-12.3 8.6-12.3 14.6s6.2 14.6 12.3 14.6h141.4c6.2 0 12.3-5.8 12.3-13.4 0.3-9.5-6.2-15.9-12.3-15.9H378.8z m251.6-91.2c0-6-6.2-14.6-12.3-14.6H375.7c-6.2 0-12.4 8.6-12.4 14.6s6.2 14.6 12.4 14.6h240.8c6.2 0.1 13.9-8.5 13.9-14.6z m-9.2-120.5H378.8c-6.2 0-12.3 8.6-12.3 14.6s6.2 14.6 12.3 14.6h240.8c7.7 0 13.9-8.6 13.9-14.6s-6.2-14.6-12.3-14.6z m119.4 376.6L709 714.1c9.2-12 14.6-27 14.6-43.2 0-39.4-32.1-71.4-71.8-71.4-39.7 0-71.8 32-71.8 71.4s32.1 71.4 71.8 71.4c16.3 0 31.3-5.4 43.4-14.5l31.6 31.5c3.8 3.8 10 3.8 13.8 0 3.8-3.8 3.8-10 0-13.8z m-88.8-23.6c-28.3 0-51.3-22.8-51.3-51s23-51 51.3-51c28.3 0 51.3 22.8 51.3 51s-23 51-51.3 51z',
+                        onclick: function () {
+                            myTool(mychart1.getOption());
+                        }
+                    }
                 }
             },
             series: [{
                 type: 'pie',
                 radius: '40%',
+                // 图表位置
+                center: ['50%', '55%'],
+                // 标签
+                label: {
+                    normal: {
+                        position: 'inner',
+                        formatter: '{c}笔\n{d}%',
+                        fontWeight: 'bold'
+                    }
+
+                },
+                // 标签线
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
                 data: [
                     {
                         value: 500,
@@ -158,57 +217,17 @@
                         name: "抢修工单"
                     }
                 ],
-                // // 南丁格尔图
-                // roseType: 'angle',
-                // 通用样式设置
-                itemStyle: {
-                    //正常加载显示样式
-                    normal: {
-                        // 阴影的大小
-                        shadowBlur: 200,
-                        // 阴影水平方向上的偏移
-                        shadowOffsetX: 0,
-                        // 阴影垂直方向上的偏移
-                        shadowOffsetY: 0,
-                        // 阴影颜色
-                        shadowColor: 'rgba(0, 0, 0, 0.5)',
-                        // 设置所有扇形的颜色
-                        color: '#c23531'
-                    },
-                    //鼠标hover时显示样式
-                    emphasis: {
-                        shadowBlur: 200,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }
             }],
-            // 设置背景颜色
-            // backgroundColor: '#2c343c',
-            // 根据数值设置扇形的明暗度
-            visualMap: {
-                // 不显示 visualMap 组件，只用于明暗度的映射
-                show: false,
-                // 映射的最小值为 80
-                min: 80,
-                // 映射的最大值为 600
-                max: 600,
-                inRange: {
-                    // 明暗度的范围是 0 到 1
-                    colorLightness: [0, 1]
-                }
-            }
         };
         mychart1.setOption(option1);
-        var mychart2 = echarts.init(document.getElementById('echart-2'));
+        var mychart2 = echarts.init(document.getElementById('echart-2'), 'macarons');
         var option2 = {
             title: {
-                text: '2016~2018工单对比',
-                left: 'center',
-                // top: 20,
-                textStyle: {
-                    color: '#ccc'
-                }
+                text: '2016~2018工单对比(单位：笔)',
+                left: '30',
+                top: '10'
             },
+            // 鼠标移上图表时显示
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {            // 坐标轴指示器，坐标轴触发有效
@@ -217,63 +236,33 @@
             },
             // 图例
             legend: {
-                top: 20,
+                bottom: 0,
                 data: ['抢修工单', '非抢修工单']
             },
             toolbox: {
                 show: true,
-                // orient: 'vertical',
-                x: 'center',
-                y: 'bottom',
+                right: '50',
+                top: '10',
                 feature: {
-                    mark: {show: true},
-                    dataView: {show: true, readOnly: false},
-                    magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                    dataView: {show: false, readOnly: false},
+                    magicType: {show: true, type: ['stack', 'tiled']},
                     restore: {show: true},
                     saveAsImage: {show: true},
                     myTool: {
                         show: true,
-                        title: '自定义扩展方法',
-                        z: '19931222',
+                        title: '放大',
                         icon: 'path://M525.4 721.2H330.9c-9 0-18.5-7.7-18.5-18.1V311c0-9 9.3-18.1 18.5-18.1h336.6c9.3 0 18.5 9.1 18.5 18.1v232.7c0 6 8.8 12.1 15 12.1 6.2 0 15-6 15-12.1V311c0-25.6-25.3-48.9-50.1-48.9h-335c-26.2 0-50.1 23.3-50.1 48.9v389.1c0 36.3 20 51.5 50.1 51.5h197.6c6.2 0 9.3-7.5 9.3-15.1 0-6-6.2-15.3-12.4-15.3zM378.8 580.6c-6.2 0-12.3 8.6-12.3 14.6s6.2 14.6 12.3 14.6h141.4c6.2 0 12.3-5.8 12.3-13.4 0.3-9.5-6.2-15.9-12.3-15.9H378.8z m251.6-91.2c0-6-6.2-14.6-12.3-14.6H375.7c-6.2 0-12.4 8.6-12.4 14.6s6.2 14.6 12.4 14.6h240.8c6.2 0.1 13.9-8.5 13.9-14.6z m-9.2-120.5H378.8c-6.2 0-12.3 8.6-12.3 14.6s6.2 14.6 12.3 14.6h240.8c7.7 0 13.9-8.6 13.9-14.6s-6.2-14.6-12.3-14.6z m119.4 376.6L709 714.1c9.2-12 14.6-27 14.6-43.2 0-39.4-32.1-71.4-71.8-71.4-39.7 0-71.8 32-71.8 71.4s32.1 71.4 71.8 71.4c16.3 0 31.3-5.4 43.4-14.5l31.6 31.5c3.8 3.8 10 3.8 13.8 0 3.8-3.8 3.8-10 0-13.8z m-88.8-23.6c-28.3 0-51.3-22.8-51.3-51s23-51 51.3-51c28.3 0 51.3 22.8 51.3 51s-23 51-51.3 51z',
                         onclick: function () {
-                            $('#echart-2').width('800').height('600');
-                            var option = mychart2.getOption();
-                            option.toolbox[0].feature.myTool.show = false;
-                            mychart2.setOption(option);
-                            mychart2.resize();
-                            layer.open({
-                                type: 1,
-                                title: false,
-                                area: ['800px', '600px'],
-                                content: $('#echart-2'),
-                                //右上角关闭按钮回调
-                                cancel: function (index, layero) {
-                                    $('#echart-2').width('593').height('312');
-
-                                    // console.log(mychart2.getOption().toolbox[0].feature.myTool.show);
-                                    // mychart2.getOption().toolbox[0].feature.myTool.show = false;
-                                    // layui.$(this).width('100%').height('312');
-                                    var option = mychart2.getOption();
-                                    option.toolbox[0].feature.myTool.show = true;
-                                    mychart2.setOption(option);
-                                    mychart2.resize();
-
-                                    //返回false可禁止点击该按钮关闭
-                                    // return false;
-                                }
-                            });
-                            $(this).show(false);
+                            myTool(mychart2.getOption());
                         }
                     }
                 }
             },
-            calculable: true,
             //横轴
             xAxis: [
                 {
                     type: 'category',
-                    data: ['2018-10', '2018-11', '2018-12']
+                    data: ['2016', '2017', '2018']
                 }
             ],
             yAxis: [
@@ -285,26 +274,29 @@
                 {
                     name: '抢修工单',
                     type: 'bar',
+                    label: {show: true, fontWeight: 'bold'},
+                    // 不同系列的柱间距离
+                    barGap: '0',
                     data: [300, 320, 380]
                 },
                 {
                     name: '非抢修工单',
                     type: 'bar',
+                    label: {show: true, fontWeight: 'bold'},
+                    // 不同系列的柱间距离
+                    barGap: '0',
                     data: [480, 560, 600]
                 }
             ]
         };
         mychart2.setOption(option2);
 
-        var mychart3 = echarts.init(document.getElementById('echart-3'));
+        var mychart3 = echarts.init(document.getElementById('echart-3'), 'macarons');
         var option3 = {
             title: {
                 text: '2018抢修工单',
-                left: 'center',
-                // top: 20,
-                textStyle: {
-                    color: '#ccc'
-                }
+                left: '30',
+                top: '10'
             },
             tooltip: {
                 trigger: 'item',
@@ -312,19 +304,59 @@
             },
             // 图例
             legend: {
-                orient: 'horizontal',
-                bottom:'bottom',
-                right: 'right',
-                data: ['高压故障', '低压故障','电能质量故障','客户内部故障','非电力故障','计量故障']
+                type: 'scroll',
+                bottom: '5%',
+                data: ['高压故障', '低压故障', '电能质量故障', '客户内部故障', '非电力故障', '计量故障']
+            },
+            toolbox: {
+                show: true,
+                right: '50',
+                top: '10',
+                feature: {
+                    //数据视图
+                    dataView: {show: true, readOnly: false},
+                    //还原
+                    restore: {show: true},
+                    //保存为图片
+                    saveAsImage: {show: true},
+                    //自定义工具
+                    myTool: {
+                        show: true,
+                        title: '放大',
+                        // z: '19931222',
+                        icon: 'path://M525.4 721.2H330.9c-9 0-18.5-7.7-18.5-18.1V311c0-9 9.3-18.1 18.5-18.1h336.6c9.3 0 18.5 9.1 18.5 18.1v232.7c0 6 8.8 12.1 15 12.1 6.2 0 15-6 15-12.1V311c0-25.6-25.3-48.9-50.1-48.9h-335c-26.2 0-50.1 23.3-50.1 48.9v389.1c0 36.3 20 51.5 50.1 51.5h197.6c6.2 0 9.3-7.5 9.3-15.1 0-6-6.2-15.3-12.4-15.3zM378.8 580.6c-6.2 0-12.3 8.6-12.3 14.6s6.2 14.6 12.3 14.6h141.4c6.2 0 12.3-5.8 12.3-13.4 0.3-9.5-6.2-15.9-12.3-15.9H378.8z m251.6-91.2c0-6-6.2-14.6-12.3-14.6H375.7c-6.2 0-12.4 8.6-12.4 14.6s6.2 14.6 12.4 14.6h240.8c6.2 0.1 13.9-8.5 13.9-14.6z m-9.2-120.5H378.8c-6.2 0-12.3 8.6-12.3 14.6s6.2 14.6 12.3 14.6h240.8c7.7 0 13.9-8.6 13.9-14.6s-6.2-14.6-12.3-14.6z m119.4 376.6L709 714.1c9.2-12 14.6-27 14.6-43.2 0-39.4-32.1-71.4-71.8-71.4-39.7 0-71.8 32-71.8 71.4s32.1 71.4 71.8 71.4c16.3 0 31.3-5.4 43.4-14.5l31.6 31.5c3.8 3.8 10 3.8 13.8 0 3.8-3.8 3.8-10 0-13.8z m-88.8-23.6c-28.3 0-51.3-22.8-51.3-51s23-51 51.3-51c28.3 0 51.3 22.8 51.3 51s-23 51-51.3 51z',
+                        onclick: function () {
+                            myTool(mychart3.getOption());
+                        }
+                    }
+                }
             },
             series: [{
+                name: '抢修工单',
                 type: 'pie',
-                radius: ['15%','35%'],
-                center:['35%','50%'],
-                data: [{
-                    value: 235,
-                    name: "高压故障"
+                radius: ['20%', '45%'],
+                label: {
+                    normal: {
+                        formatter: '{b|{b}}：{c}笔\n{per|{d}%}',
+                        rich: {
+                            b: {
+                                fontSize: 14,
+                                lineHeight: 20
+                            },
+                            per: {
+                                color: '#eee',
+                                backgroundColor: '#334455',
+                                padding: 2,
+                                borderRadius: 5
+                            }
+                        }
+                    }
                 },
+                data: [
+                    {
+                        value: 235,
+                        name: "高压故障"
+                    },
                     {
                         value: 222,
                         name: "低压故障"
@@ -345,62 +377,76 @@
                         value: 367,
                         name: "计量故障"
                     }
-                ],
-                // // 南丁格尔图
-                // roseType: 'angle',
-                // 通用样式设置
-                // itemStyle: {
-                //     //正常加载显示样式
-                //     normal: {
-                //         // 阴影的大小
-                //         shadowBlur: 200,
-                //         // 阴影水平方向上的偏移
-                //         shadowOffsetX: 0,
-                //         // 阴影垂直方向上的偏移
-                //         shadowOffsetY: 0,
-                //         // 阴影颜色
-                //         shadowColor: 'rgba(0, 0, 0, 0.5)',
-                //         // 设置所有扇形的颜色
-                //         color: '#c23531'
-                //     },
-                //     //鼠标hover时显示样式
-                //     emphasis: {
-                //         shadowBlur: 200,
-                //         shadowColor: 'rgba(0, 0, 0, 0.5)'
-                //     }
-                // }
-            }],
-            // 根据数值设置扇形的明暗度
-            // visualMap: {
-            //     // 不显示 visualMap 组件，只用于明暗度的映射
-            //     show: false,
-            //     // 映射的最小值为 80
-            //     min: 80,
-            //     // 映射的最大值为 600
-            //     max: 600,
-            //     inRange: {
-            //         // 明暗度的范围是 0 到 1
-            //         colorLightness: [0, 1]
-            //     }
-            // }
+                ]
+            }]
         };
         mychart3.setOption(option3);
-        var mychart4 = echarts.init(document.getElementById('echart-4'));
+        var mychart4 = echarts.init(document.getElementById('echart-4'), 'macarons');
         var option4 = {
+            title: {
+                text: '2018非抢修工单',
+                left: '30',
+                top: '10'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{b}: {c} ({d}%)"
+            },
             legend: {
-                orient: 'horizontal',
-                bottom:'bottom',
-                right: 'right',
-                data: ['投诉', '建议','举报','咨询','意见','表扬','服务申请']
+                type: 'scroll',
+                bottom: '5%',
+                // left: 'center',
+                data: ['投诉', '建议', '举报', '咨询', '意见', '表扬', '服务申请']
+            },
+            toolbox: {
+                show: true,
+                right: '50',
+                top: '10',
+                feature: {
+                    //数据视图
+                    dataView: {show: true, readOnly: false},
+                    //还原
+                    restore: {show: true},
+                    //保存为图片
+                    saveAsImage: {show: true},
+                    //自定义工具
+                    myTool: {
+                        show: true,
+                        title: '放大',
+                        // z: '19931222',
+                        icon: 'path://M525.4 721.2H330.9c-9 0-18.5-7.7-18.5-18.1V311c0-9 9.3-18.1 18.5-18.1h336.6c9.3 0 18.5 9.1 18.5 18.1v232.7c0 6 8.8 12.1 15 12.1 6.2 0 15-6 15-12.1V311c0-25.6-25.3-48.9-50.1-48.9h-335c-26.2 0-50.1 23.3-50.1 48.9v389.1c0 36.3 20 51.5 50.1 51.5h197.6c6.2 0 9.3-7.5 9.3-15.1 0-6-6.2-15.3-12.4-15.3zM378.8 580.6c-6.2 0-12.3 8.6-12.3 14.6s6.2 14.6 12.3 14.6h141.4c6.2 0 12.3-5.8 12.3-13.4 0.3-9.5-6.2-15.9-12.3-15.9H378.8z m251.6-91.2c0-6-6.2-14.6-12.3-14.6H375.7c-6.2 0-12.4 8.6-12.4 14.6s6.2 14.6 12.4 14.6h240.8c6.2 0.1 13.9-8.5 13.9-14.6z m-9.2-120.5H378.8c-6.2 0-12.3 8.6-12.3 14.6s6.2 14.6 12.3 14.6h240.8c7.7 0 13.9-8.6 13.9-14.6s-6.2-14.6-12.3-14.6z m119.4 376.6L709 714.1c9.2-12 14.6-27 14.6-43.2 0-39.4-32.1-71.4-71.8-71.4-39.7 0-71.8 32-71.8 71.4s32.1 71.4 71.8 71.4c16.3 0 31.3-5.4 43.4-14.5l31.6 31.5c3.8 3.8 10 3.8 13.8 0 3.8-3.8 3.8-10 0-13.8z m-88.8-23.6c-28.3 0-51.3-22.8-51.3-51s23-51 51.3-51c28.3 0 51.3 22.8 51.3 51s-23 51-51.3 51z',
+                        onclick: function () {
+                            myTool(mychart4.getOption());
+                        }
+                    }
+                }
             },
             series: [{
+                name: '非抢修工单',
                 type: 'pie',
-                radius: ['15%','35%'],
-                center:['35%','50%'],
-                data: [{
-                    value: 235,
-                    name: "投诉"
+                radius: ['20%', '45%'],
+                label: {
+                    normal: {
+                        formatter: '{b|{b}}：{c}笔\n{per|{d}%}',
+                        rich: {
+                            b: {
+                                fontSize: 14,
+                                lineHeight: 20
+                            },
+                            per: {
+                                color: '#eee',
+                                backgroundColor: '#334455',
+                                padding: 2,
+                                borderRadius: 5
+                            }
+                        }
+                    }
                 },
+                data: [
+                    {
+                        value: 235,
+                        name: "投诉"
+                    },
                     {
                         value: 222,
                         name: "建议"
@@ -425,49 +471,39 @@
                         value: 400,
                         name: "服务申请"
                     }
-                ],
-                // // 南丁格尔图
-                // roseType: 'angle',
-                // 通用样式设置
-                // itemStyle: {
-                //     //正常加载显示样式
-                //     normal: {
-                //         // 阴影的大小
-                //         shadowBlur: 200,
-                //         // 阴影水平方向上的偏移
-                //         shadowOffsetX: 0,
-                //         // 阴影垂直方向上的偏移
-                //         shadowOffsetY: 0,
-                //         // 阴影颜色
-                //         shadowColor: 'rgba(0, 0, 0, 0.5)',
-                //         // 设置所有扇形的颜色
-                //         color: '#c23531'
-                //     },
-                //     //鼠标hover时显示样式
-                //     emphasis: {
-                //         shadowBlur: 200,
-                //         shadowColor: 'rgba(0, 0, 0, 0.5)'
-                //     }
-                // }
-            }],
-            // 设置背景颜色
-            // backgroundColor: '#2c343c',
-            // 根据数值设置扇形的明暗度
-            // visualMap: {
-            //     // 不显示 visualMap 组件，只用于明暗度的映射
-            //     show: false,
-            //     // 映射的最小值为 80
-            //     min: 80,
-            //     // 映射的最大值为 600
-            //     max: 600,
-            //     inRange: {
-            //         // 明暗度的范围是 0 到 1
-            //         colorLightness: [0, 1]
-            //     }
-            // }
+                ]
+            }]
         };
         mychart4.setOption(option4);
+        var mychartTest;
 
+        function myTool(option) {
+            $('#container').css('display', 'block');
+            if (mychartTest != null && mychartTest !== "" && mychartTest !== undefined) {
+                mychartTest.dispose();
+            }
+            mychartTest = echarts.init(document.getElementById('container'));
+            option.toolbox[0].feature.myTool.show = false;
+            if (option.series[0].type !== null && option.series[0].type !== undefined) {
+                if (option.series[0].type === 'bar') {
+                    option.toolbox[0].feature.dataView.show = true;
+                    option.toolbox[0].feature.magicType.type = ['line', 'bar', 'stack', 'tiled'];
+                }
+            }
+            mychartTest.setOption(option);
+            mychartTest.resize();
+            layer.open({
+                type: 1,
+                title: false,
+                area: ['800px', '600px'],
+                content: $('#container'),
+                //右上角关闭按钮回调
+                cancel: function (index, layero) {
+                    $('#container').css('display', 'none');
+                }
+            });
+            // $(this).show(false);
+        }
     });
 </script>
 </body>
