@@ -43,4 +43,29 @@ public class UserServiceImpl implements UserService {
     public int insert(List<WorkOrder> list) {
         return userMapper.insert(list);
     }
+
+    @Override
+    public List<WorkOrder> getCountsTwoTypesOfWorkOrder(String year, String month) {
+        return userMapper.getCountsTwoTypesOfWorkOrder(year, month);
+    }
+
+    @Override
+    public List<WorkOrder> getWorkOrderOfThreeSectionsDate(String year, String month) {
+        return userMapper.getWorkOrderOfThreeSectionsDate(year, month);
+    }
+
+    @Override
+    public List<WorkOrder> getWorkOrders(String year, String month, String totalType) {
+        return userMapper.getWorkOrders(year, month, totalType);
+    }
+
+    @Override
+    public List<WorkOrder> getAllWorkOrders() {
+        return userMapper.getAllWorkOrders();
+    }
+
+    @Override
+    public int hasDateOfWorkOrder(String date) {
+        return userMapper.hasDateOfWorkOrder(date);
+    }
 }

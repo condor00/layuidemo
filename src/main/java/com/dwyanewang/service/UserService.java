@@ -17,4 +17,15 @@ public interface UserService {
     Map<String, Object> listUsersByTime(int page, int limit, String startTime, String endTime);
 
     int insert(List<WorkOrder> list);
+
+    List<WorkOrder> getCountsTwoTypesOfWorkOrder(String year, String month);
+
+    List<WorkOrder> getWorkOrderOfThreeSectionsDate(String year, String month);
+
+    List<WorkOrder> getWorkOrders(String year, String month, String totalType);
+
+    List<WorkOrder> getAllWorkOrders();
+
+    int hasDateOfWorkOrder(String date);
+
 }

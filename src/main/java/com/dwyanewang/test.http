@@ -21,3 +21,36 @@ Content-Type: application/x-www-form-urlencoded
 
 
 ###
+
+POST http://localhost:8080/getCountsTwoTypesOfWorkOrder?year=2017&month=10
+Content-Type: application/x-www-form-urlencoded
+
+###
+
+POST http://localhost:8080/getWorkOrderOfThreeSectionsDate?year=2018&month=12
+Content-Type: application/x-www-form-urlencoded
+
+###
+
+
+POST http://localhost:8080/getWorkOrderOfRushRepair?year=2017&month=10
+Content-Type: application/x-www-form-urlencoded
+
+###
+POST http://localhost:8080/getWorkOrderOfNoRushRepair?year=2018&month=12
+Content-Type: application/x-www-form-urlencoded
+
+id=99&content=new-element
+
+###
+POST http://localhost:8080/getWorkOrder?year=2015&month=12
+Content-Type: application/x-www-form-urlencoded
+
+
+
+###
+
+POST http://localhost:8080/hasDateOfWorkOrder?date=2018-12-01
+Content-Type: application/x-www-form-urlencoded
+
+###

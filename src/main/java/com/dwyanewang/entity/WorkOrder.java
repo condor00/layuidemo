@@ -1,17 +1,16 @@
 package com.dwyanewang.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.sql.Date;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 
 public class WorkOrder {
-
+    @JsonIgnore
     private long id;
     private String type;
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private Date date;
+//    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private String statisticsDate;
     private long numbers;
     private String totalType;
 
@@ -33,13 +32,12 @@ public class WorkOrder {
         this.type = type;
     }
 
-
-    public Date getDate() {
-        return date;
+    public String getStatisticsDate() {
+        return statisticsDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setStatisticsDate(String statisticsDate) {
+        this.statisticsDate = statisticsDate;
     }
 
     public long getNumbers() {
@@ -63,7 +61,7 @@ public class WorkOrder {
     public String toString() {
         return "WorkOrder{" +
                 "type='" + type + '\'' +
-                ", date='" + date + '\'' +
+                ", statisticsDate='" + statisticsDate + '\'' +
                 ", numbers=" + numbers +
                 ", totalType='" + totalType + '\'' +
                 '}';

@@ -10,6 +10,11 @@
     <meta charset="UTF-8">
     <title>form-layer</title>
     <link rel="stylesheet" href="layui/css/layui.css">
+    <style>
+        .searchWorkOrder {
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
 <!--<div style="height: 80px;"></div>-->
@@ -17,17 +22,30 @@
     <div style="width: 1780px;padding: 80px 70px 0;">
         <fieldset class="layui-elem-field layui-field-title">
             <legend style="color: #fff;">95598工单统计
-                <button id="iframe" class="layui-btn layui-btn-radius" data-aaa="test"
+                <button id="iframe" class="layui-btn layui-btn-radius" data-insert="insert"
                         style="margin-left: 30px;border: 1px solid #c8c9bb;background: linear-gradient(#2d5ca1, #00003b)">
                     <i class="layui-icon"></i>录入
                 </button>
             </legend>
             <div class="layui-field-box">
                 <div class="layui-row">
-                    <div class="layui-col-xs12" style="background-color: #009688;height: 48px;">
-                        <label class="layui-form-label">统计日期</label>
-                        <div class="layui-input-block">
-                            <input type="text" class="layui-input" id="statisticalDate">
+                    <div class="layui-col-xs12" style="height: 48px;">
+                        <div class="layui-row layui-col-space30 searchWorkOrder">
+                            <div class="layui-col-xs-offset3 layui-col-xs2">
+                                <label class="layui-form-label">选择年份</label>
+                                <div class="layui-input-block">
+                                    <input type="text" class="layui-input" id="selectYear" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="layui-col-xs2">
+                                <label class="layui-form-label">选择月份</label>
+                                <div class="layui-input-block">
+                                    <input type="text" class="layui-input" id="selectMonth" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="layui-col-xs1">
+                                <button id="searchWorkOrder" class="layui-btn" data-search="search">查 询</button>
+                            </div>
                         </div>
                     </div>
                     <div class="layui-col-xs2" style="height: 312px;">
@@ -75,12 +93,13 @@
     layui.config({
         base: 'layui/lay/plug/'
     });
-    layui.use(['layer', 'echarts'], function () {
+    layui.use(['layer', 'echarts', 'laydate'], function () {
         var $ = layui.$,
             echarts = layui.echarts,
+            laydate = layui.laydate,
             layer = layui.layer;
         var active = {
-            test: function () {
+            insert: function () {
                 layer.open({
                     type: 2,
                     title: '95598工单录入',
@@ -95,16 +114,16 @@
                         body.find('.statistics-input').each(function (index, el) {
                             var obj = {};
                             obj.type = $(this).parent().siblings('label').text();
-                            obj.date = body.find('#statisticalDate').val() + "-01";
+                            obj.statisticsDate = body.find('#statisticalDate').val() + "-01";
                             if ($(this).val()) {
                                 obj.numbers = Number($(this).val());
                             } else {
                                 obj.numbers = 0;
                             }
                             obj.totalType = $(this).parents('.layui-container').siblings('legend').text();
-                            if (obj.numbers !== 0) {
-                                list.push(obj);
-                            }
+                            // if (obj.numbers !== 0) {
+                            list.push(obj);
+                            // }
                         });
                         if (body.find('#statisticalDate').val() === "") {
                             layer.msg("必填项日期未填写!!!", {time: 1500, icon: 2, anim: 6});
@@ -112,30 +131,75 @@
                         } else {
                             $.ajax({
                                 type: "post",
-                                url: "/insert",
-                                // async: false,
-                                data: "workOrders=" + JSON.stringify(list),
+                                url: "/hasDateOfWorkOrder",
+                                data: {"date": body.find('#statisticalDate').val() + "-01"},
                                 dataType: "json",
                                 success: function (data) {
-                                    console.log(data);
-                                    if (data !== 0) {
-                                        layer.close(index);
-                                        layer.msg("添加95598工单成功", {time: 1500, icon: 1});
-                                        //向父页面传递数据
-                                        parent.layui.$('#iframe').text('我被改变了');
-                                    } else {
-                                        layer.msg("添加95598工单失败", {time: 1500, icon: 2, anim: 6});
-                                    }
-
+                                    layer.open({
+                                        type: 1,
+                                        content: "当月已存在" + "<strong>" + data + "</strong>条记录，是否继续更新？",
+                                        title: "提示",
+                                        closeBtn: false,
+                                        btn: ['确定', '取消'],
+                                        yes: function (index, layero) {
+                                            layer.closeAll();
+                                            $.ajax({
+                                                type: "post",
+                                                url: "/insert",
+                                                // async: false,
+                                                data: "workOrders=" + JSON.stringify(list),
+                                                dataType: "json",
+                                                success: function (data) {
+                                                    console.log(data);
+                                                    if (data !== 0) {
+                                                        layer.msg("添加95598工单成功", {time: 1500, icon: 1});
+                                                        //向父页面传递数据
+                                                        parent.layui.$('#iframe').text('我被改变了');
+                                                        getEchartData();
+                                                    } else {
+                                                        layer.msg("添加95598工单失败", {time: 1500, icon: 2, anim: 6});
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    })
                                 }
                             });
                         }
                     }
                 });
+            },
+            search: function () {
+                var selectYear = $("#selectYear").val();
+                var selectMonth = $("#selectMonth").val();
+                if (selectYear == null || selectYear === "") {
+                    if (selectMonth != null && selectMonth !== "") {
+                        layer.msg("请输入年份!!!", {time: 1500, icon: 2, anim: 6});
+                        // $("#selectYear").focus().val("");
+                    } else {
+                        getEchartData();
+                    }
+                } else {
+                    getEchartData(selectYear, selectMonth);
+                }
             }
         };
         $('#iframe').on('click', function () {
-            var type = $(this).data('aaa');
+            var type = $(this).data('insert');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        laydate.render({
+            elem: '#selectYear',
+            type: 'year'
+        });
+        laydate.render({
+            elem: '#selectMonth',
+            type: 'month',
+            format: 'MM'
+        });
+        $('#searchWorkOrder').on('click', function () {
+            var type = $(this).data('search');
             active[type] ? active[type].call(this) : '';
         });
 
@@ -143,14 +207,14 @@
         var option1 = {
             //标题
             title: {
-                text: '2018工单总计',
+                text: '',
                 left: 'center',
                 top: 15
             },
             // 图例
             legend: {
                 bottom: 20,
-                data: ['抢修工单', '非抢修工单'],
+                data: [],
                 textStyle: {
                     color: '#008acd'
                 }
@@ -207,23 +271,14 @@
                         show: false
                     }
                 },
-                data: [
-                    {
-                        value: 500,
-                        name: "非抢修工单"
-                    },
-                    {
-                        value: 666,
-                        name: "抢修工单"
-                    }
-                ],
-            }],
+                data: []
+            }]
         };
         mychart1.setOption(option1);
         var mychart2 = echarts.init(document.getElementById('echart-2'), 'macarons');
         var option2 = {
             title: {
-                text: '2016~2018工单对比(单位：笔)',
+                text: '',
                 left: '30',
                 top: '10'
             },
@@ -237,7 +292,7 @@
             // 图例
             legend: {
                 bottom: 0,
-                data: ['抢修工单', '非抢修工单']
+                data: []
             },
             toolbox: {
                 show: true,
@@ -262,7 +317,7 @@
             xAxis: [
                 {
                     type: 'category',
-                    data: ['2016', '2017', '2018']
+                    data: []
                 }
             ],
             yAxis: [
@@ -277,7 +332,7 @@
                     label: {show: true, fontWeight: 'bold'},
                     // 不同系列的柱间距离
                     barGap: '0',
-                    data: [300, 320, 380]
+                    data: []
                 },
                 {
                     name: '非抢修工单',
@@ -285,7 +340,7 @@
                     label: {show: true, fontWeight: 'bold'},
                     // 不同系列的柱间距离
                     barGap: '0',
-                    data: [480, 560, 600]
+                    data: []
                 }
             ]
         };
@@ -294,7 +349,7 @@
         var mychart3 = echarts.init(document.getElementById('echart-3'), 'macarons');
         var option3 = {
             title: {
-                text: '2018抢修工单',
+                text: '',
                 left: '30',
                 top: '10'
             },
@@ -306,7 +361,7 @@
             legend: {
                 type: 'scroll',
                 bottom: '5%',
-                data: ['高压故障', '低压故障', '电能质量故障', '客户内部故障', '非电力故障', '计量故障']
+                data: []
             },
             toolbox: {
                 show: true,
@@ -352,39 +407,14 @@
                         }
                     }
                 },
-                data: [
-                    {
-                        value: 235,
-                        name: "高压故障"
-                    },
-                    {
-                        value: 222,
-                        name: "低压故障"
-                    },
-                    {
-                        value: 456,
-                        name: "电能质量故障"
-                    },
-                    {
-                        value: 367,
-                        name: "客户内部故障"
-                    },
-                    {
-                        value: 400,
-                        name: "非电力故障"
-                    },
-                    {
-                        value: 367,
-                        name: "计量故障"
-                    }
-                ]
+                data: []
             }]
         };
         mychart3.setOption(option3);
         var mychart4 = echarts.init(document.getElementById('echart-4'), 'macarons');
         var option4 = {
             title: {
-                text: '2018非抢修工单',
+                text: '',
                 left: '30',
                 top: '10'
             },
@@ -396,7 +426,7 @@
                 type: 'scroll',
                 bottom: '5%',
                 // left: 'center',
-                data: ['投诉', '建议', '举报', '咨询', '意见', '表扬', '服务申请']
+                data: []
             },
             toolbox: {
                 show: true,
@@ -442,36 +472,7 @@
                         }
                     }
                 },
-                data: [
-                    {
-                        value: 235,
-                        name: "投诉"
-                    },
-                    {
-                        value: 222,
-                        name: "建议"
-                    },
-                    {
-                        value: 456,
-                        name: "举报"
-                    },
-                    {
-                        value: 367,
-                        name: "咨询"
-                    },
-                    {
-                        value: 400,
-                        name: "意见"
-                    },
-                    {
-                        value: 367,
-                        name: "表扬"
-                    },
-                    {
-                        value: 400,
-                        name: "服务申请"
-                    }
-                ]
+                data: []
             }]
         };
         mychart4.setOption(option4);
@@ -499,10 +500,71 @@
                 content: $('#container'),
                 //右上角关闭按钮回调
                 cancel: function (index, layero) {
-                    $('#container').css('display', 'none');
+                    layer.close(index);
+                    var body = top.layer.getChildFrame('body', index);
+                    console.log(body.find('#container'));
+                    // body.find('#container').css('display', 'none');
                 }
             });
             // $(this).show(false);
+        }
+
+        getEchartData();
+
+        function getEchartData(year, month) {
+            $.ajax({
+                type: "POST",
+                url: "/getWorkOrder",
+                data: {
+                    "year": year,
+                    "month": month
+                },
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    console.log(data.twoTypesOfWorkOrder.countData);
+                    var mydate = new Date();
+                    if (year != null && year !== "" && year !== undefined) {
+                        year = year + "年";
+                        if (month != null && month !== "" && month !== undefined) {
+                            month = "-" + month + "月";
+                        } else {
+                            month = "";
+                        }
+                    } else {
+                        year = mydate.getFullYear() + "年";
+                        month = "";
+                    }
+                    var option5 = mychart1.getOption();
+                    option5.title[0].text = year + month + "工单总计";
+                    option5.legend[0].data = data.twoTypesOfWorkOrder.totalType;
+                    option5.series[0].data = data.twoTypesOfWorkOrder.countData;
+                    mychart1.setOption(option5);
+
+                    var option6 = mychart2.getOption();
+                    var threeSectionsDate = data.threeSectionsDate.statisticsDate;
+                    option6.title[0].text = threeSectionsDate[0] + "~" + threeSectionsDate[threeSectionsDate.length - 1] + "工单对比(单位：笔)";
+                    option6.legend[0].data = data.threeSectionsDate.totalType;
+                    option6.xAxis[0].data = threeSectionsDate;
+                    option6.series[0].name = data.threeSectionsDate.totalType[0];
+                    option6.series[0].data = data.threeSectionsDate.rushRepair;
+                    option6.series[1].name = data.threeSectionsDate.totalType[1];
+                    option6.series[1].data = data.threeSectionsDate.noRushRepair;
+                    mychart2.setOption(option6);
+
+                    var option7 = mychart3.getOption();
+                    option7.title[0].text = year + month + "抢修工单";
+                    option7.legend[0].data = data.rushRepair.type;
+                    option7.series[0].data = data.rushRepair.countData;
+                    mychart3.setOption(option7);
+
+                    var option8 = mychart4.getOption();
+                    option8.title[0].text = year + month + "非抢修工单";
+                    option8.legend[0].data = data.noRushRepair.type;
+                    option8.series[0].data = data.noRushRepair.countData;
+                    mychart4.setOption(option8);
+                }
+            });
         }
     });
 </script>
